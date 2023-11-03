@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:http_proxy/http_proxy.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -84,6 +85,13 @@ Future<void> launchSmoothApp({
     await AnalyticsHelper.initSentry(
         appRunner: () => runApp(const SmoothApp()));
   } else {
+    if (kDebugMode) {
+      // Fix to address https://github.com/flutter/flutter/issues/26359
+      // Added only in debug mode since it causes bad certificate being accepted
+      final HttpProxy proxy = await HttpProxy.createHttpProxy();
+      HttpOverrides.global = proxy;
+    }
+
     runApp(
       DevicePreview(
         enabled: true,

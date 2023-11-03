@@ -73,6 +73,7 @@ dependencies:
   connectivity_plus: 4.0.2
   dart_ping: 9.0.0
   dart_ping_ios: 4.0.0
+  http_proxy: 1.2.1
 
   # According to the build variant, only one "app store" implementation must be added when building a release
   # Call "flutter pub remove xxxx" to remove unused dependencies
